@@ -1,20 +1,28 @@
 package com.quickbudget.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 @Table(name = "TRANSACTIONS")
 public class Transaction {
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    public Account account;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    public Category category;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
@@ -36,11 +44,12 @@ public class Transaction {
     @Column(name = "inflow")
     private BigDecimal inflow;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id")
-    private Category category;
+    public Transaction(String name, LocalDate date, String payee,
+                       BigDecimal outflow, BigDecimal inflow) {
+        this.name = name;
+        this.date = date;
+        this.payee = payee;
+        this.outflow = outflow;
+        this.inflow = inflow;
+    }
 }
