@@ -4,9 +4,7 @@ import com.quickbudget.domain.BudgetDto;
 import com.quickbudget.mapper.BudgetMapper;
 import com.quickbudget.service.DBService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +23,25 @@ public class BudgetController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getBudget")
-    public BudgetDto getBudget(Long budgetId) {
-        return new BudgetDto(1L, "Test budget", new ArrayList<>());
+    public BudgetDto getBudget(@RequestParam Long budgetId) throws BudgetNotFoundException {
+        return budgetMapper.mapToBudgetDto(
+                dbService.getBudget(budgetId)
+                .orElseThrow(BudgetNotFoundException::new)
+        );
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "deleteBudget    ")
-    public void deleteBudget(Long budgetId) {
-
+    @RequestMapping(method = RequestMethod.DELETE, value = "deleteBudget")
+    public void deleteBudget(@RequestParam Long budgetId) {
+        dbService.deleteBudget(budgetId);
     }
+
     @RequestMapping(method = RequestMethod.PUT, value = "updateBudget")
-    public BudgetDto updateBudget(Long budgetId) {
-        return new BudgetDto(1L, "Updated budget", new ArrayList<>());
+    public BudgetDto updateBudget(@RequestBody BudgetDto budgetDto) {
+        return budgetMapper.mapToBudgetDto(dbService.saveBudget(budgetMapper.mapToBudget(budgetDto)));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "createBudget")
-    public void createBudget(BudgetDto budgetDto) {
-
+    public void createBudget(@RequestBody BudgetDto budgetDto) {
+        dbService.saveBudget(budgetMapper.mapToBudget(budgetDto));
     }
 }
