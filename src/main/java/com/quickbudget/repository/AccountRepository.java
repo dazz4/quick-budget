@@ -1,20 +1,20 @@
 package com.quickbudget.repository;
 
-import com.quickbudget.domain.Budget;
+import com.quickbudget.domain.Account;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface BudgetRepository extends CrudRepository<Budget, Long> {
+public interface AccountRepository extends CrudRepository<Account, Long> {
     @Override
-    List<Budget> findAll();
+    List<Account> findAll();
 
     @Override
-    Optional<Budget> findById(Long id);
+    Optional<Account> findById(Long id);
 
     @Override
-    Budget save(Budget budget);
+    Account save(Account account);
 
     @Override
     void deleteById(Long aLong);

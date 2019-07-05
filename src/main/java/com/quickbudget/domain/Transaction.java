@@ -1,5 +1,7 @@
 package com.quickbudget.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +10,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -15,14 +19,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "TRANSACTIONS")
 public class Transaction {
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    public Account account;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id")
-    public Category category;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
@@ -44,12 +40,17 @@ public class Transaction {
     @Column(name = "inflow")
     private BigDecimal inflow;
 
-    public Transaction(String name, LocalDate date, String payee,
-                       BigDecimal outflow, BigDecimal inflow) {
-        this.name = name;
-        this.date = date;
-        this.payee = payee;
-        this.outflow = outflow;
-        this.inflow = inflow;
-    }
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    @JsonBackReference
+    private Account account;
+
+    @OneToMany(
+            targetEntity = Category.class,
+            mappedBy = "transaction",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @JsonManagedReference
+    private List<Category> categories = new ArrayList<>();
 }
