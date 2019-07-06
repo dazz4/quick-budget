@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("/v1/budget")
 public class BudgetController {
@@ -30,9 +32,9 @@ public class BudgetController {
         );
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "deleteBudget")
-    public void deleteBudget(@RequestParam Long budgetId) {
-        dbService.deleteBudget(budgetId);
+    @RequestMapping(method = RequestMethod.POST, value = "createBudget", consumes = APPLICATION_JSON_VALUE)
+    public void createBudget(@RequestBody BudgetDto budgetDto) {
+        dbService.saveBudget(budgetMapper.mapToBudget(budgetDto));
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateBudget")
@@ -40,8 +42,8 @@ public class BudgetController {
         return budgetMapper.mapToBudgetDto(dbService.saveBudget(budgetMapper.mapToBudget(budgetDto)));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "createBudget")
-    public void createBudget(@RequestBody BudgetDto budgetDto) {
-        dbService.saveBudget(budgetMapper.mapToBudget(budgetDto));
+    @RequestMapping(method = RequestMethod.DELETE, value = "deleteBudget")
+    public void deleteBudget(@RequestParam Long budgetId) {
+        dbService.deleteBudget(budgetId);
     }
 }

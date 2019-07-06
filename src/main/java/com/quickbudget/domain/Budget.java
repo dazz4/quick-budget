@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,8 @@ import java.util.List;
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
+    @Column(name = "id", unique = true)
     private Long id;
 
     @Column(name = "name")
