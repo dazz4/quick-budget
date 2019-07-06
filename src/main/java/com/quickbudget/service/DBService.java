@@ -45,4 +45,7 @@ public class DBService {
         accountRepository.deleteById(id);
     }
 
+    public Account saveAccount(final Account account) {
+        return accountRepository.save(account);
+    }
 }

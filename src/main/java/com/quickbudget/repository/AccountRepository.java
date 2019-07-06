@@ -17,5 +17,5 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     Account save(Account account);
 
     @Override
-    void deleteById(Long aLong);
+    void deleteById(Long id);
 }
