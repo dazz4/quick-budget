@@ -1,6 +1,5 @@
 package com.quickbudget.controller;
 
-import com.quickbudget.domain.AccountDto;
 import com.quickbudget.domain.CategoryDto;
 import com.quickbudget.mapper.CategoryMapper;
 import com.quickbudget.service.DBService;
@@ -45,5 +44,4 @@ public class CategoryController {
     public void deleteCategory(Long categoryId) {
         dbService.deleteCategory(categoryId);
     }
-
 }

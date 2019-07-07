@@ -13,16 +13,16 @@ public class CategoryMapper {
         return new Category(
                 categoryDto.getId(),
                 categoryDto.getName(),
-                categoryDto.getTransaction());
+                categoryDto.getTransactions());
     }
 
     public CategoryDto mapToCategoryDto(final Category category) {
-        return new CategoryDto(category.getId(), category.getName(), category.getTransaction());
+        return new CategoryDto(category.getId(), category.getName(), category.getTransactions());
     }
 
     public List<CategoryDto> mapToCategoryDtoList(final List<Category> categories) {
         return categories.stream()
-                .map(b -> new CategoryDto(b.getId(), b.getName(), b.getTransaction()))
+                .map(b -> new CategoryDto(b.getId(), b.getName(), b.getTransactions()))
                 .collect(Collectors.toList());
     }
 }

@@ -23,33 +23,33 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "id", unique = true)
+    @Column(name = "TRANSACTION_ID")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "TRANSACTION_NAME")
     private String name;
 
-    @Column(name = "date")
+    @Column(name = "DATE")
     private LocalDate date;
 
-    @Column(name = "payee")
+    @Column(name = "PAYEE")
     private String payee;
 
-    @Column(name = "outflow")
+    @Column(name = "OUTFLOW")
     private BigDecimal outflow;
 
-    @Column(name = "inflow")
+    @Column(name = "INFLOW")
     private BigDecimal inflow;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
-    @OneToMany(
-            targetEntity = Category.class,
-            mappedBy = "transaction",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "JOIN_TRANSACTION_CATEGORY",
+            joinColumns = {@JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "TRANSACTION_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "CATEGORY_ID", referencedColumnName = "CATEGORY_ID")}
     )
     private List<Category> categories = new ArrayList<>();
 }
