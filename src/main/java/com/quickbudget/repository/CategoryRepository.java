@@ -1,6 +1,5 @@
 package com.quickbudget.repository;
 
-import com.quickbudget.domain.Account;
 import com.quickbudget.domain.Category;
 import org.springframework.data.repository.CrudRepository;
 
