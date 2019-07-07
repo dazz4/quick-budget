@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class AccountMapper {
-
     public Account mapToAccount(final AccountDto accountDto) {
         return new Account(
                 accountDto.getId(),
@@ -38,5 +37,4 @@ public class AccountMapper {
                         a.getTransactions()))
                 .collect(Collectors.toList());
     }
-
 }

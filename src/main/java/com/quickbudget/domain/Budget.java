@@ -1,10 +1,10 @@
 package com.quickbudget.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.quickbudget.serializer.BudgetSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,9 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 @Entity
 @Table(name = "BUDGETS")
+@JsonSerialize(using = BudgetSerializer.class)
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,8 +30,8 @@ public class Budget {
     @OneToMany(
             targetEntity = Account.class,
             mappedBy = "budget",
+            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    @JsonManagedReference
     private List<Account> accounts = new ArrayList<>();
 }
