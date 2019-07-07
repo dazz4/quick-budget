@@ -13,7 +13,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/v1/budget")
+@RequestMapping("/v1/budget/account")
 public class AccountController {
     @Autowired
     private DBService dbService;

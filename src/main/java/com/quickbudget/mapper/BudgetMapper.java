@@ -10,7 +10,10 @@ import java.util.stream.Collectors;
 @Component
 public class BudgetMapper {
     public Budget mapToBudget(final BudgetDto budgetDto) {
-        return new Budget(budgetDto.getId(), budgetDto.getName(), budgetDto.getAccounts());
+        return new Budget(
+                budgetDto.getId(),
+                budgetDto.getName(),
+                budgetDto.getAccounts());
     }
 
     public BudgetDto mapToBudgetDto(final Budget budget) {

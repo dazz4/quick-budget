@@ -1,16 +1,20 @@
 package com.quickbudget.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.quickbudget.serializer.CategorySerializer;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Entity
 @Table(name = "CATEGORIES")
+@JsonSerialize(using = CategorySerializer.class)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,8 +25,7 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "transaction_id")
     private Transaction transaction;
 }

@@ -8,13 +8,13 @@ import java.util.Optional;
 
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
     @Override
-    Transaction save(Transaction transaction);
+    List<Transaction> findAll();
 
     @Override
     Optional<Transaction> findById(Long aLong);
 
     @Override
-    List<Transaction> findAll();
+    Transaction save(Transaction transaction);
 
     @Override
     void deleteById(Long id);
