@@ -2,9 +2,11 @@ package com.quickbudget.service;
 
 import com.quickbudget.domain.Account;
 import com.quickbudget.domain.Budget;
+import com.quickbudget.domain.Category;
 import com.quickbudget.domain.Transaction;
 import com.quickbudget.repository.AccountRepository;
 import com.quickbudget.repository.BudgetRepository;
+import com.quickbudget.repository.CategoryRepository;
 import com.quickbudget.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class DBService {
     private AccountRepository accountRepository;
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public Budget saveBudget(final Budget budget) {
         return repository.save(budget);
@@ -37,8 +41,6 @@ public class DBService {
         repository.deleteById(id);
     }
 
-
-
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
@@ -55,8 +57,6 @@ public class DBService {
         return accountRepository.save(account);
     }
 
-
-
     public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
     }
@@ -71,5 +71,21 @@ public class DBService {
 
     public Transaction saveTransaction(final Transaction transaction) {
         return transactionRepository.save(transaction);
+    }
+
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    public Optional<Category> getCategory(final Long id) {
+        return categoryRepository.findById(id);
+    }
+
+    public void deleteCategory(final Long id) {
+        categoryRepository.deleteById(id);
+    }
+
+    public Category saveCategory(final Category category) {
+        return categoryRepository.save(category);
     }
 }
