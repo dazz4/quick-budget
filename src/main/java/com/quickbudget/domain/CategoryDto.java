@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -13,6 +15,5 @@ import lombok.ToString;
 public class CategoryDto {
     private Long id;
     private String name;
-    @JsonIgnore
-    private Transaction transaction;
+    private List<Transaction> transactions;
 }
