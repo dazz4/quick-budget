@@ -21,16 +21,16 @@ public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "id", unique = true)
+    @Column(name = "BUDGET_ID")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "BUDGET_NAME")
     private String name;
 
     @OneToMany(
             targetEntity = Account.class,
             mappedBy = "budget",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.MERGE,
             fetch = FetchType.LAZY
     )
     private List<Account> accounts = new ArrayList<>();

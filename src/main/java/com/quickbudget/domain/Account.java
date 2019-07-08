@@ -22,23 +22,23 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "id", unique = true)
+    @Column(name = "ACCOUNT_ID")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "ACCOUNT_NAME")
     private String name;
 
-    @Column(name = "balance")
+    @Column(name = "BALANCE")
     private BigDecimal balance;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "budget_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "BUDGET_ID")
     private Budget budget;
 
     @OneToMany(
             targetEntity = Transaction.class,
             mappedBy = "account",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.MERGE,
             fetch = FetchType.LAZY
     )
     private List<Transaction> transactions = new ArrayList<>();
